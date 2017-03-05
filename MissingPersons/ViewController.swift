@@ -9,6 +9,8 @@
 import UIKit
 import ProjectOxfordFace
 
+let baseURL = "http://localhost:6069/img/"
+
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -16,8 +18,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     let imagePicker = UIImagePickerController()
     
-    let baseURL = "http://localhost:6069/img/"
-    let missingPeople = [ "person1.jpg", "person2.jpg", "person3.jpg", "person4.jpg", "person5.jpg" , "person6.png"]
+    let missingPeople = [
+        Person(personImageURL: "person1.jpg"),
+        Person(personImageURL: "person2.jpg"),
+        Person(personImageURL: "person3.jpg"),
+        Person(personImageURL: "person4.jpg"),
+        Person(personImageURL: "person5.jpg"),
+        Person(personImageURL: "person6.png")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,8 +51,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PersonCell", for: indexPath) as! PersonCell
-        let url = "\(baseURL)\(missingPeople[indexPath.row])"
-        cell.configureCell(imgURL: url)
+        
+        let person = missingPeople[indexPath.row]
+        cell.configureCell(person: person)
         return cell
         
     }
