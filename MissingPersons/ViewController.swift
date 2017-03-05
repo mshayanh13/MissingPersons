@@ -13,8 +13,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var selectedImage: UIImageView!
     
-    let baseURL = "http://localhost:6069/img"
-    let missingPeople = [ "person1.jpg", "person2.jpg", "person3.jpg", "person4.jpg", "person5.jpg" , "person6.jpg"]
+    let baseURL = "http://localhost:6069/img/"
+    let missingPeople = [ "person1.jpg", "person2.jpg", "person3.jpg", "person4.jpg", "person5.jpg" , "person6.png"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +37,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PersonCell", for: indexPath) as! PersonCell
-        
+        let url = "\(baseURL)\(missingPeople[indexPath.row])"
+        cell.configureCell(imgURL: url)
         return cell
         
     }

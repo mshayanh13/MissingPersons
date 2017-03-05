@@ -48,7 +48,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="144" id="C35-d8-WsU"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="odG-Kx-FNu">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="odG-Kx-FNu">
                                     <size key="itemSize" width="160" height="139"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -56,7 +56,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PersonCell" id="KFb-Ey-bVw" customClass="PersonCell" customModule="MissingPersons" customModuleProvider="target">
-                                        <rect key="frame" x="80" y="0.0" width="160" height="139"/>
+                                        <rect key="frame" x="0.0" y="3" width="160" height="139"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="160" height="139"/>
@@ -73,6 +73,9 @@
                                             <constraint firstItem="cty-6k-BIs" firstAttribute="bottom" secondItem="KFb-Ey-bVw" secondAttribute="bottomMargin" id="X8F-ft-cox"/>
                                             <constraint firstItem="cty-6k-BIs" firstAttribute="trailing" secondItem="KFb-Ey-bVw" secondAttribute="trailingMargin" id="cz1-yC-JaM"/>
                                         </constraints>
+                                        <connections>
+                                            <outlet property="personImage" destination="cty-6k-BIs" id="61a-3d-TET"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
