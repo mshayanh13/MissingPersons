@@ -17,6 +17,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet weak var selectedImage: UIImageView!
     
     var selectedPerson: Person?
+    var hasSelectedImage: Bool = false
     
     let imagePicker = UIImagePickerController()
     
@@ -40,9 +41,56 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         selectedImage.addGestureRecognizer(tap)
     }
     
+    func showErrorAlert() {
+        let alert = UIAlertController(title: "Select Person", message: "Please select a person to check and an image from your album", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(ok)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @IBAction func checkForMatch(_ sender: UIButton) {
         
-        
+        if selectedPerson == nil || !hasSelectedImage {
+            
+            showErrorAlert()
+            
+        } else {
+            
+            if let myImage = selectedImage.image, let imageData = UIImageJPEGRepresentation(myImage, 0.8) {
+                
+                FaceService.instance.client?.detect(with: imageData, returnFaceId: true, returnFaceLandmarks: false, returnFaceAttributes: nil, completionBlock: { (faces: [MPOFace]?, error: Error?) in
+                    
+                    if error == nil {
+                        
+                        var faceID: String?
+                        for face in faces! {
+                            
+                            faceID = face.faceId
+                            break
+                        }
+                        
+                        if faceID != nil {
+                            
+                            FaceService.instance.client?.verify(withFirstFaceId: self.selectedPerson!.faceID, faceId2: faceID, completionBlock: { (result: MPOVerifyResult?, error: Error?) in
+                                
+                                
+                                if error == nil {
+                                    print("\(result!.confidence)")
+                                    print("\(result!.isIdentical)")
+                                }
+                                print("\(result!.debugDescription)")
+                                
+                            })
+                            
+                        }
+                        
+                    }
+                    
+                })
+                
+            }
+            
+        }
         
     }
     
@@ -64,7 +112,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
        
         self.selectedPerson = missingPeople[indexPath.row]
         let cell = collectionView.cellForItem(at: indexPath)  as! PersonCell
-        //(withReuseIdentifier: "PersonCell", for: indexPath) as! PersonCell
+        //deque(withReuseIdentifier: "PersonCell", for: indexPath) as! PersonCell
         //cell.configureCell(person: selectedPerson!)
         cell.setSelected()
         
@@ -74,6 +122,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
             selectedImage.image = pickedImage
+            hasSelectedImage = true
             
         }
         dismiss(animated: true, completion: nil)
@@ -87,6 +136,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         present(imagePicker, animated: true, completion: nil)
         
     }
-
+    
 }
 
