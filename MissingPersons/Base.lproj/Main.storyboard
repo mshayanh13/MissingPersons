@@ -102,10 +102,47 @@
                                     <action selector="checkForMatch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lpl-MF-jhp"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="cr1-ln-gLR">
+                                <rect key="frame" x="60" y="383" width="200" height="47"/>
+                                <subviews>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="72t-41-zA7">
+                                        <rect key="frame" x="0.0" y="0.0" width="90" height="47"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="47" id="93s-zk-fWs"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                        <state key="normal" title="Photos">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="photoSourceChosenWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AuJ-mY-EhT"/>
+                                        </connections>
+                                    </button>
+                                    <button hidden="YES" opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bzP-dc-eCq">
+                                        <rect key="frame" x="110" y="0.0" width="90" height="47"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="47" id="ZhO-K8-hYC"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                        <state key="normal" title="Camera">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="photoSourceChosenWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="f0F-W4-23X"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="Mvj-Sh-WFh"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="uyq-tf-qOV" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="0Rx-gb-tGL"/>
+                            <constraint firstItem="cr1-ln-gLR" firstAttribute="top" secondItem="2cB-Mm-O1b" secondAttribute="bottom" constant="8" id="2JN-X6-0f5"/>
                             <constraint firstItem="Avo-5l-zYW" firstAttribute="top" secondItem="uyq-tf-qOV" secondAttribute="bottom" constant="8" id="4s9-Gk-JWv"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="MEU-2z-p7W" secondAttribute="bottom" constant="47" id="5og-sG-lDa"/>
                             <constraint firstItem="Avo-5l-zYW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6zJ-tg-VmI"/>
@@ -113,12 +150,15 @@
                             <constraint firstAttribute="trailing" secondItem="Avo-5l-zYW" secondAttribute="trailing" id="Dzq-dE-eFt"/>
                             <constraint firstItem="MEU-2z-p7W" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="I4z-hN-BaH"/>
                             <constraint firstItem="2cB-Mm-O1b" firstAttribute="top" secondItem="Avo-5l-zYW" secondAttribute="bottom" constant="24" id="LYL-k3-CTE"/>
+                            <constraint firstItem="cr1-ln-gLR" firstAttribute="centerX" secondItem="2cB-Mm-O1b" secondAttribute="centerX" id="SiS-Ny-c5D"/>
                             <constraint firstAttribute="trailing" secondItem="uyq-tf-qOV" secondAttribute="trailing" id="g4W-1U-cC6"/>
                             <constraint firstItem="uyq-tf-qOV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="uFh-e6-3om"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cameraButton" destination="bzP-dc-eCq" id="aU2-uu-hQU"/>
                         <outlet property="collectionView" destination="Avo-5l-zYW" id="93f-LG-alS"/>
+                        <outlet property="photosButton" destination="72t-41-zA7" id="6Ax-AB-dQj"/>
                         <outlet property="selectedImage" destination="2cB-Mm-O1b" id="QvH-Kh-dDN"/>
                     </connections>
                 </viewController>

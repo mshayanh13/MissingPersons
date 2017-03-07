@@ -15,6 +15,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var selectedImage: UIImageView!
+    @IBOutlet weak var photosButton: UIButton!
+    @IBOutlet weak var cameraButton: UIButton!
     
     var selectedPerson: Person?
     var hasSelectedImage: Bool = false
@@ -36,7 +38,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         collectionView.dataSource = self
         imagePicker.delegate = self
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.loadPicker(gesture:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.loadCameraOrPhotos(gesture:)))
         tap.numberOfTapsRequired = 1
         selectedImage.addGestureRecognizer(tap)
     }
@@ -75,10 +77,32 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                                 
                                 
                                 if error == nil {
-                                    print("\(result!.confidence)")
-                                    print("\(result!.isIdentical)")
+                                    
+                                    if let results = result, let confidence = results.confidence {
+                                        
+                                        if (results.isIdentical || Double(results.confidence) > 0.5) {
+                                        
+                                            let alert = UIAlertController(title: "Person matches", message: "Person matches with \(confidence)%", preferredStyle: .alert)
+                                            let ok = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                                            alert.addAction(ok)
+                                            self.present(alert, animated: true, completion: nil)
+                                        } else {
+                                            let alert = UIAlertController(title: "Person does not match", message: "Person matches with \(confidence)%", preferredStyle: .alert)
+                                            let ok = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                                            alert.addAction(ok)
+                                            self.present(alert, animated: true, completion: nil)
+                                        }
+                                        
+                                    }
+                                    
+                                    /*print("\
+                                        (result!.confidence)")
+                                    print("\(result!.isIdentical)") */
+                                } else {
+                                    
+                                    
+                                    
                                 }
-                                print("\(result!.debugDescription)")
                                 
                             })
                             
@@ -123,17 +147,47 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             
             selectedImage.image = pickedImage
             hasSelectedImage = true
+            photosButton.isHidden = true
+            cameraButton.isHidden = true
             
         }
         dismiss(animated: true, completion: nil)
     }
 
-    func loadPicker(gesture: UITapGestureRecognizer) {
+    func loadPicker(option: String) {
         
         imagePicker.allowsEditing = true
-        imagePicker.sourceType = .photoLibrary
+        
+        if option == "Photos" {
+            
+            imagePicker.sourceType = .photoLibrary
+            
+        } else if option == "Camera" {
+            
+            imagePicker.sourceType = .camera
+            
+        }
         
         present(imagePicker, animated: true, completion: nil)
+        
+    }
+    
+    func loadCameraOrPhotos(gesture: UITapGestureRecognizer) {
+        
+        photosButton.isHidden = false
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            cameraButton.isHidden = false
+        }
+    }
+    
+    @IBAction func photoSourceChosen(sender: UIButton) {
+        
+        if sender.tag == 0 {
+            loadPicker(option: "Photos")
+        } else {
+            loadPicker(option: "Camera")
+        }
         
     }
     
